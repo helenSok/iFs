@@ -1,5 +1,7 @@
 DROP DATABASE IF EXISTS fsdb;
 
+test
+
 CREATE DATABASE fsdb CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 USE fsdb;
