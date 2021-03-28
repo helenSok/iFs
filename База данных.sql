@@ -1,7 +1,5 @@
 DROP DATABASE IF EXISTS fsdb;
 
-test
-
 CREATE DATABASE fsdb CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 USE fsdb;
@@ -13,6 +11,8 @@ id int PRIMARY key	AUTO_INCREMENT
 ,image_uri varchar(255)
 ,parameter_id int
 ,FOREIGN KEY (parameter_id) REFERENCES parameters(id));
+
+my name is pall
 
 insert into parameters (name, description, image_uri, parameter_id) VALUES ("Лицо", "","http://", null);
 insert into parameters (name, description, image_uri, parameter_id) VALUES ("Лоб", "","http://", null);

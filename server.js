@@ -32,3 +32,5 @@ db.sequelize.sync().then(() => {
     console.log(`listening on port: ${PORT}`)
   })
 })
+
+
