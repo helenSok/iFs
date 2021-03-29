@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-console.log('hello')
+console.log('hello-moto')
 
 var bodyParser = require("body-parser")
 const db = require('./models')
