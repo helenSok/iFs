@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     "genders",
     {
       id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-      name: { type: DataTypes.STRING }
+      name: { type: DataTypes.STRING },
     },
     {
       timestamps: false,
