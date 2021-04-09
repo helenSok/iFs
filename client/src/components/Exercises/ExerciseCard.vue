@@ -7,8 +7,7 @@
             <v-icon class="pr-2 ex-icon">
               mdi-apps
             </v-icon>
-            <div class="ex-title">Упражнения {{ this.$store.state.exercise.tests }}</div>
-            <v-text-field label="Test" v-model="testss"></v-text-field>
+            <div class="ex-title">Упражнения</div>
           </v-card-title>
           <v-simple-table class="mx-0">
             <template v-slot:default>
@@ -186,7 +185,8 @@ export default {
     },
   },
   mounted() {
-    this.getExercises(), this.getDateResult(this.date), this.getResults()
+    this.getExercises()
+    // this.getDateResult(this.date), this.getResults()
   },
   computed: {
     ...mapState("exercise", ["exercises"]),
