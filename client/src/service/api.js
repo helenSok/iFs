@@ -2,7 +2,7 @@ import axios from "axios"
 
 const api = () => {
   return axios.create({
-    baseURL: "http://192.168.0.5:5000",
+    baseURL: "http://192.168.0.2:5000",
     withCredentials: false,
     headers: {
       Accept: "application/json",
@@ -17,7 +17,7 @@ export const getAllExercises = async (user_id) => {
 
 export default () => {
   return axios.create({
-    baseURL: "http://192.168.0.5:5000",
+    baseURL: "http://192.168.0.2:5000",
     withCredentials: false,
     headers: {
       Accept: "application/json",
