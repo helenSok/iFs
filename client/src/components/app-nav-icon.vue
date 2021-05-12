@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     ...mapState({
-      drawer_icon: (state) => state.app.drawer_icon,
+      drawer_icon: (state) => state.app.drawer_icon, //todo Использовать везде эту запись
     }),
   },
 }

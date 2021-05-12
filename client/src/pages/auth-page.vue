@@ -28,7 +28,7 @@
 import router from "../router"
 
 export default {
-  name: "Login",
+  name: "auth-page",
   data: () => ({
     email: "",
     password: "",

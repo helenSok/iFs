@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       execute_time: { type: DataTypes.STRING },
       material_count: { type: DataTypes.INTEGER },
       actual: { type: DataTypes.INTEGER },
-      created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
+      created: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     },
     {
       timestamps: false,

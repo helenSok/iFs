@@ -1,15 +1,14 @@
 <template>
-  <v-app>
-    <exercise-list />
-  </v-app>
+  <exercise-list />
 </template>
 
 <script>
 import router from "../router"
 import ExerciseList from "../components/exercise/exercise-list.vue"
+// import { mapActions } from "vuex"
 
 export default {
-  name: "Login",
+  name: "exercise-page",
   data: () => ({
     email: "",
     password: "",
@@ -17,7 +16,11 @@ export default {
   components: {
     ExerciseList,
   },
+  mounted() {
+    // this.getExerciseTypes()
+  },
   methods: {
+    // ...mapActions("exercises", ["getExerciseTypes"]),
     login() {
       router.push({ path: "/main/exercises" })
     },

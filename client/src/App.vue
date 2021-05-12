@@ -1,6 +1,9 @@
 <template>
   <v-app>
-    <router-view />
+    <!-- <router-view /> -->
+    <component :is="layout">
+      <router-view />
+    </component>
   </v-app>
 </template>
 
@@ -13,5 +16,10 @@ export default {
   data: () => ({
     //
   }),
+  computed: {
+    layout() {
+      return this.$route.meta.layout || "default-layout"
+    },
+  },
 }
 </script>

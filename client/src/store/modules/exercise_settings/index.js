@@ -5,7 +5,7 @@ import getters from "./getters"
 export default {
   namespaced: true,
   state: {
-    exercises: [],
+    exercise_settings: [],
   },
   actions,
   mutations,

@@ -12,8 +12,6 @@ id int PRIMARY key	AUTO_INCREMENT
 ,parameter_id int
 ,FOREIGN KEY (parameter_id) REFERENCES parameters(id));
 
-my name is pall
-
 insert into parameters (name, description, image_uri, parameter_id) VALUES ("Лицо", "","http://", null);
 insert into parameters (name, description, image_uri, parameter_id) VALUES ("Лоб", "","http://", null);
 insert into parameters (name, description, image_uri, parameter_id) VALUES ("Брови", "","http://", null);
@@ -609,7 +607,7 @@ insert into material_types (name) VALUES ("Описание внешности")
 
 CREATE TABLE materials (
 id int PRIMARY key	AUTO_INCREMENT
-,uri varchar(30)
+,uri varchar(255)
 ,age varchar(10)
 ,type_id int not null
 ,race_id int
@@ -618,7 +616,12 @@ id int PRIMARY key	AUTO_INCREMENT
 ,FOREIGN KEY (gender_id) REFERENCES genders(id)
 ,FOREIGN KEY (type_id) REFERENCES material_types(id));
 
-insert into materials (uri, age, type_id, race_id, gender_id) VALUES ("Картинка", "24", 1, 1, 1);
+insert into materials (uri, age, type_id, race_id, gender_id) VALUES ("http://192.168.0.2:5000/uploads/image/07032021-230911_668-27.PNG", "24", 1, 1, 2);
+insert into materials (uri, age, type_id, race_id, gender_id) VALUES ("http://192.168.0.2:5000/uploads/image/07032021-230930_814-18.PNG", "22", 1,  2, 1);
+insert into materials (uri, age, type_id, race_id, gender_id) VALUES ("http://192.168.0.2:5000/uploads/image/227.PNG", "25", 1,  3, 1);
+insert into materials (uri, age, type_id, race_id, gender_id) VALUES ("http://192.168.0.2:5000/uploads/image/228.jpg", "21", 1,  3, 1);
+insert into materials (uri, age, type_id, race_id, gender_id) VALUES ("http://192.168.0.2:5000/uploads/image/20.PNG", "21", 1,  3, 2);
+insert into materials (uri, age, type_id, race_id, gender_id) VALUES ("http://192.168.0.2:5000/uploads/image/79.PNG", "79", 1,  3, 2);
 
 CREATE TABLE material_likes (
 material_id int not null
@@ -664,8 +667,8 @@ CREATE TABLE exercise_types (
 id int PRIMARY key	AUTO_INCREMENT
 ,name varchar(15)
 ,short_name varchar(1));
-insert into exercise_types (name, short_name) VALUES ("Тренировка", "Т");
 insert into exercise_types (name, short_name) VALUES ("Контроль", "К");
+insert into exercise_types (name, short_name) VALUES ("Тренировка", "Т");
 
 CREATE TABLE exercise_levels (
 id int PRIMARY key	AUTO_INCREMENT
@@ -686,7 +689,7 @@ insert into exercises (title, name, purpose, description, uri)
             "Описание элементов внешности по фотоснимку",
             "Отработка техники выявления криминалистических особенностей на лице", 
             "Это упражнение предназначено...", 
-            "/main/exerciseFirst/element");
+            "exercise/one");
 insert into exercises (title, name, purpose, description, uri) 
     VALUES ("Упражнение 2", 
             "Описание элементов внешности по фотоснимку в условиях кратковременного предъявления",
@@ -734,20 +737,104 @@ id int PRIMARY key	AUTO_INCREMENT
 ,FOREIGN KEY (user_id) REFERENCES users(id)
 ,FOREIGN KEY (exercise_id) REFERENCES exercises(id)
 ,FOREIGN KEY (level_id) REFERENCES exercise_levels(id));
-insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 1, 1, 1, 3);
-insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 1, 2, 1, 3);
-insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(30, 1, 1, 1, CURRENT_DATE, 1, 1, 2, 3);
-insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(30, 1, 1, 0, CURRENT_DATE, 2, 1, 2, 3);
-insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(25, 1, 1, 1, CURRENT_DATE, 2, 1, 2, 2);
+insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(99, 1, 1, 1, CURRENT_DATE, 1, 1, 1, 3);
+insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 2, 1, 1, 3);
+/* insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id, race_id, gender_id) values(null, 1, 1, 1, CURRENT_DATE, 2, 2, 1, 3,null,2); */
+insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(30, 1, 1, 0, CURRENT_DATE, 1, 1, 2, 3);
+insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(25, 1, 1, 1, CURRENT_DATE, 1, 1, 2, 2);
 insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 1, 1, 3, 3);
-insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 2, 2, 3, 3);
+insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 2, 1, 3, 3);
+/* insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id, race_id, gender_id) values(null, 1, 1, 1, CURRENT_DATE, 1, 2, 3, 3,null,2); */
 insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 1, 1, 4, 3);
-insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 2, 2, 4, 3);
+insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 2, 1, 4, 3);
+/* insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id, race_id, gender_id) values(null, 1, 1, 1, CURRENT_DATE, 1, 2, 4, 3,null,2); */
 insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 1, 1, 5, 3);
-insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 2, 2, 5, 3);
+insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 2, 1, 5, 3);
+/* insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id, race_id, gender_id) values(null, 1, 1, 1, CURRENT_DATE, 1, 2, 5, 3,null,2); */
 insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 1, 1, 6, 3);
-insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 2, 2, 6, 3);
+insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id) values(null, 1, 1, 1, CURRENT_DATE, 2, 1, 6, 3);
+/* insert into exercise_settings(execute_time, material_type_id, material_count, actual, created, exercise_type_id, user_id, exercise_id, level_id, race_id, gender_id) values(null, 1, 1, 1, CURRENT_DATE, 1, 2, 6, 3,null,2); */
 
+
+CREATE TABLE setting_races (
+setting_id int not null
+,race_id int not null
+,FOREIGN KEY (setting_id) REFERENCES exercise_settings(id)
+,FOREIGN KEY (race_id) REFERENCES races(id)
+,PRIMARY KEY (race_id, setting_id));
+
+/* insert into setting_races (setting_id, race_id) VALUES (1, 1); */
+/* insert into setting_races (setting_id, race_id) VALUES (1, 2); */
+insert into setting_races (setting_id, race_id) VALUES (1, 3);
+/* insert into setting_races (setting_id, race_id) VALUES (1, 4); */
+/* insert into setting_races (setting_id, race_id) VALUES (1, 5); */
+insert into setting_races (setting_id, race_id) VALUES (2, 1);
+insert into setting_races (setting_id, race_id) VALUES (2, 2);
+insert into setting_races (setting_id, race_id) VALUES (2, 3);
+insert into setting_races (setting_id, race_id) VALUES (2, 4);
+insert into setting_races (setting_id, race_id) VALUES (2, 5);
+insert into setting_races (setting_id, race_id) VALUES (3, 1);
+insert into setting_races (setting_id, race_id) VALUES (3, 2);
+insert into setting_races (setting_id, race_id) VALUES (3, 3);
+insert into setting_races (setting_id, race_id) VALUES (3, 4);
+insert into setting_races (setting_id, race_id) VALUES (3, 5);
+insert into setting_races (setting_id, race_id) VALUES (4, 1);
+insert into setting_races (setting_id, race_id) VALUES (4, 2);
+insert into setting_races (setting_id, race_id) VALUES (4, 3);
+insert into setting_races (setting_id, race_id) VALUES (4, 4);
+insert into setting_races (setting_id, race_id) VALUES (4, 5);
+insert into setting_races (setting_id, race_id) VALUES (5, 1);
+insert into setting_races (setting_id, race_id) VALUES (5, 2);
+insert into setting_races (setting_id, race_id) VALUES (5, 3);
+insert into setting_races (setting_id, race_id) VALUES (5, 4);
+insert into setting_races (setting_id, race_id) VALUES (5, 5);
+insert into setting_races (setting_id, race_id) VALUES (6, 1);
+insert into setting_races (setting_id, race_id) VALUES (6, 2);
+insert into setting_races (setting_id, race_id) VALUES (6, 3);
+insert into setting_races (setting_id, race_id) VALUES (6, 4);
+insert into setting_races (setting_id, race_id) VALUES (6, 5);
+insert into setting_races (setting_id, race_id) VALUES (7, 1);
+insert into setting_races (setting_id, race_id) VALUES (7, 2);
+insert into setting_races (setting_id, race_id) VALUES (7, 3);
+insert into setting_races (setting_id, race_id) VALUES (7, 4);
+insert into setting_races (setting_id, race_id) VALUES (7, 5);
+insert into setting_races (setting_id, race_id) VALUES (8, 1);
+insert into setting_races (setting_id, race_id) VALUES (8, 2);
+insert into setting_races (setting_id, race_id) VALUES (8, 3);
+insert into setting_races (setting_id, race_id) VALUES (8, 4);
+insert into setting_races (setting_id, race_id) VALUES (8, 5);
+insert into setting_races (setting_id, race_id) VALUES (9, 1);
+insert into setting_races (setting_id, race_id) VALUES (9, 2);
+insert into setting_races (setting_id, race_id) VALUES (9, 3);
+insert into setting_races (setting_id, race_id) VALUES (9, 4);
+insert into setting_races (setting_id, race_id) VALUES (9, 5);
+
+
+CREATE TABLE setting_genders (
+setting_id int not null
+,gender_id int not null
+,FOREIGN KEY (setting_id) REFERENCES exercise_settings(id)
+,FOREIGN KEY (gender_id) REFERENCES genders(id)
+,PRIMARY KEY (gender_id, setting_id));
+
+insert into setting_genders (setting_id, gender_id) VALUES (1, 1);
+insert into setting_genders (setting_id, gender_id) VALUES (1, 2);
+insert into setting_genders (setting_id, gender_id) VALUES (2, 1);
+insert into setting_genders (setting_id, gender_id) VALUES (2, 2);
+insert into setting_genders (setting_id, gender_id) VALUES (3, 1);
+insert into setting_genders (setting_id, gender_id) VALUES (3, 2);
+insert into setting_genders (setting_id, gender_id) VALUES (4, 1);
+insert into setting_genders (setting_id, gender_id) VALUES (4, 2);
+insert into setting_genders (setting_id, gender_id) VALUES (5, 1);
+insert into setting_genders (setting_id, gender_id) VALUES (5, 2);
+insert into setting_genders (setting_id, gender_id) VALUES (6, 1);
+insert into setting_genders (setting_id, gender_id) VALUES (6, 2);
+insert into setting_genders (setting_id, gender_id) VALUES (7, 1);
+insert into setting_genders (setting_id, gender_id) VALUES (7, 2);
+insert into setting_genders (setting_id, gender_id) VALUES (8, 1);
+insert into setting_genders (setting_id, gender_id) VALUES (8, 2);
+insert into setting_genders (setting_id, gender_id) VALUES (9, 1);
+insert into setting_genders (setting_id, gender_id) VALUES (9, 2);
 
 CREATE TABLE marks (
 id int PRIMARY key	AUTO_INCREMENT   
@@ -809,4 +896,130 @@ insert into material_parameters (material_id, parameter_id) VALUES (1, 117);
 insert into material_parameters (material_id, parameter_id) VALUES (1, 120);
 insert into material_parameters (material_id, parameter_id) VALUES (1, 123);
 
+insert into material_parameters (material_id, parameter_id) VALUES (2, 35);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 40);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 43);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 46);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 51);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 56);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 59);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 62);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 65);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 73);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 76);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 81);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 83);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 86);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 88);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 91);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 94);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 98);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 101);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 104);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 109);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 113);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 115);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 117);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 120);
+insert into material_parameters (material_id, parameter_id) VALUES (2, 123);
 
+insert into material_parameters (material_id, parameter_id) VALUES (3, 35);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 40);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 43);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 46);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 51);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 56);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 59);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 62);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 65);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 73);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 76);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 81);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 83);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 86);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 88);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 91);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 94);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 101);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 104);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 109);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 113);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 115);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 117);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 120);
+insert into material_parameters (material_id, parameter_id) VALUES (3, 123);
+
+insert into material_parameters (material_id, parameter_id) VALUES (4, 35);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 40);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 43);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 46);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 51);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 56);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 59);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 62);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 73);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 76);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 81);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 83);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 86);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 88);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 91);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 94);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 98);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 101);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 104);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 109);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 113);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 115);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 117);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 120);
+insert into material_parameters (material_id, parameter_id) VALUES (4, 123);
+
+insert into material_parameters (material_id, parameter_id) VALUES (5, 41);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 44);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 47);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 51);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 56);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 59);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 62);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 65);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 73);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 76);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 81);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 88);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 91);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 94);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 98);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 101);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 104);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 109);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 113);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 115);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 117);
+insert into material_parameters (material_id, parameter_id) VALUES (5, 123);
+
+insert into material_parameters (material_id, parameter_id) VALUES (6, 35);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 40);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 43);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 46);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 51);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 56);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 59);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 62);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 65);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 73);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 76);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 81);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 83);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 86);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 88);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 91);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 94);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 101);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 104);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 109);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 113);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 115);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 117);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 120);
+insert into material_parameters (material_id, parameter_id) VALUES (6, 123);
