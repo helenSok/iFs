@@ -13,8 +13,14 @@ export default {
   async getHeadElements({ commit }) {
     const response = await api.getAllParameters()
     const head_elements = response.data.filter((t) => t.parameter_id == null)
-    const element_params = response.data.map((t) => t).filter((f) => head_elements.map((e) => e.id).includes(f.parameter_id))
-    const param_descriptions = response.data.map((t) => t).filter((f) => element_params.map((e) => e.id).includes(f.parameter_id))
+
+    console.log(head_elements)
+    const element_params = response.data
+      .map((t) => t)
+      .filter((f) => head_elements.map((e) => e.id).includes(f.parameter_id))
+    const param_descriptions = response.data
+      .map((t) => t)
+      .filter((f) => element_params.map((e) => e.id).includes(f.parameter_id))
     param_descriptions.forEach((t) => (t.check = false))
     commit("SET_HEAD_ELEMENTS", head_elements)
     commit("SET_ELEMENT_PARAMS", element_params)
