@@ -1,6 +1,11 @@
 const db = require("../models")
 
 module.exports.getAll = async (req, res) => {
+  // await db.sequelize
+  //   .query("call exercises_getAll(1, 1)", {
+  //     type: db.sequelize.QueryTypes.EXEC,
+  //   })
+
   await db.exercises
     .findAll({
       include: [

@@ -5,7 +5,7 @@
       <div v-for="(param, id) in get_parameter_description_by_character_id(element.id)" :key="id">
         <v-checkbox
           class="my-0 py-0"
-          color="indigo"
+          :color="the_end === false ? indigo : red"
           v-model="param.check"
           :label="`${param.name}`"
           @click="set_check(param, element.id)"
@@ -18,6 +18,13 @@
 
 <script>
 export default {
+  data() {
+    return {
+      the_end: false,
+      indigo: "green lighten-2",
+      red: "red lighten-2",
+    }
+  },
   name: "parameter-character",
   props: ["parameter_material_character", "parameter_material_description"],
   created() {},
