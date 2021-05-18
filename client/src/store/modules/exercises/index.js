@@ -12,6 +12,7 @@ export default {
     exercise_type_id: 0,
     selected_exercise_type: null,
     head_elements: [],
+    count_selected_checkbox: 0,
     maxAnswer: 0,
     rightAnswer: 0,
     finish: false,

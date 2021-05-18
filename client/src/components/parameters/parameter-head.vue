@@ -4,6 +4,7 @@
       <v-toolbar height="45">
         <v-tabs grow v-model="active_tab">
           <v-tab
+            :disabled="isDisabled"
             v-for="(element, i) in parameter_material_head"
             :key="i"
             @click="set_parameter_head_id(element.id)"
@@ -40,8 +41,17 @@ export default {
     "parameter_material_character",
     "parameter_material_description",
     "parameter_character_by_head_id",
+    "exercise_type_id",
   ],
-  computed: {},
+  computed: {
+    isDisabled() {
+      if (this.exercise_type_id == 1) {
+        return true
+      } else {
+        return false
+      }
+    },
+  },
   methods: {
     count_right_answer(id) {
       let character_ids = this.parameter_material_character
@@ -175,3 +185,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+::v-deep .v-tab--disabled {
+  opacity: 1 !important;
+}
+</style>

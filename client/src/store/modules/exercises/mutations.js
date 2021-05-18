@@ -2,6 +2,9 @@ export default {
   set_exercise_type_id(state, value) {
     state.exercise_type_id = value
   },
+  set_count_selected_checkbox(state, value) {
+    state.count_selected_checkbox = value
+  },
   SET_EXERCISES(state, exercises) {
     state.exercises = exercises
   },

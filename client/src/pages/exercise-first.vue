@@ -7,6 +7,7 @@
       :parameter_character_by_head_id="parameter_character_by_head_id"
       :right_answer="right_answer"
       :user_answers="user_answers"
+      :exercise_type_id="exercise_type_id"
       @parameter_head_id="set_parameter_head_id"
     >
     </parameter-head>
@@ -29,7 +30,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex"
+import { mapActions, mapMutations, mapState } from "vuex"
 import ParameterCharacter from "../components/parameters/parameter-character.vue"
 import ParameterHead from "../components/parameters/parameter-head.vue"
 
@@ -51,7 +52,12 @@ export default {
     this.getMaterials()
   },
   computed: {
-    ...mapState("exercises", ["exercise_setting", "current_exercise", "selected_exercise_type"]),
+    ...mapState("exercises", [
+      "exercise_setting",
+      "current_exercise",
+      "selected_exercise_type",
+      "exercise_type_id",
+    ]),
     ...mapState("materials", [
       "right_answer",
       "parameter_material_head",
@@ -60,8 +66,10 @@ export default {
     ]),
   },
   methods: {
+    ...mapMutations("exercises", ["setMaxAnswer", "set_count_selected_checkbox"]),
     get_user_answers() {
       this.user_answers = this.parameter_material_description.filter((t) => t.check == true)
+      this.set_count_selected_checkbox(this.user_answers.length)
     },
     ...mapActions({
       getMaterials: "materials/getMaterials",
@@ -74,6 +82,14 @@ export default {
       this.parameter_character_by_head_id = this.parameter_material_character.filter(
         (t) => t.parameter_id == id
       )
+    },
+  },
+  watch: {
+    parameter_material_head() {
+      this.set_count_selected_checkbox(0)
+    },
+    $route() {
+      console.log("HElloo nigs")
     },
   },
 }
