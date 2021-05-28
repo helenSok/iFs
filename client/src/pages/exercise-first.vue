@@ -17,8 +17,8 @@
         <parameter-character
           :parameter_material_character="parameter_character_by_head_id"
           :parameter_material_description="parameter_material_description"
-          @set_check="get_user_answers"
         >
+          <!-- @set_check="get_user_answers" -->
         </parameter-character>
         <!-- <material-image></material-image> -->
       </v-col>
@@ -44,12 +44,13 @@ export default {
     return {
       parameter_head_id: 0,
       parameter_character_by_head_id: [],
-      user_answers: [],
     }
   },
+  props: ["id"],
   created() {},
   mounted() {
     this.getMaterials()
+    console.log(this.id)
   },
   computed: {
     ...mapState("exercises", [
@@ -57,6 +58,7 @@ export default {
       "current_exercise",
       "selected_exercise_type",
       "exercise_type_id",
+      "user_answers",
     ]),
     ...mapState("materials", [
       "right_answer",
@@ -66,11 +68,15 @@ export default {
     ]),
   },
   methods: {
-    ...mapMutations("exercises", ["setMaxAnswer", "set_count_selected_checkbox"]),
-    get_user_answers() {
-      this.user_answers = this.parameter_material_description.filter((t) => t.check == true)
-      this.set_count_selected_checkbox(this.user_answers.length)
-    },
+    ...mapMutations("exercises", [
+      "setMaxAnswer",
+      "set_count_selected_checkbox",
+      "set_user_answers",
+    ]),
+    // get_user_answers() {
+    //   this.user_answers = this.parameter_material_description.filter((t) => t.check == true)
+    //   this.set_count_selected_checkbox(this.user_answers.length)
+    // },
     ...mapActions({
       getMaterials: "materials/getMaterials",
     }),
@@ -87,6 +93,7 @@ export default {
   watch: {
     parameter_material_head() {
       this.set_count_selected_checkbox(0)
+      this.set_user_answers()
     },
     $route() {
       console.log("HElloo nigs")

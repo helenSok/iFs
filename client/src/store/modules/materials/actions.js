@@ -34,6 +34,7 @@ export default {
       .filter((f) => parameter_material_character.map((e) => e.id).includes(f.parameter_id))
     parameter_material_description.forEach((element) => {
       element.check = false
+      element.color = "indigo"
     })
     commit("set_right_answer", right_answer)
     commit("set_parameter_material_head", parameter_material_head)

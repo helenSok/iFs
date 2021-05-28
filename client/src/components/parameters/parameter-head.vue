@@ -12,7 +12,7 @@
           >
             {{ element.name }}
             <template>
-              {{ count_right_answer(element.id) }} /{{ count_parameters(element.id) }}
+              {{ count_right_answer(element.id) }}/{{ count_parameters(element.id) }}
             </template>
           </v-tab>
         </v-tabs>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
 export default {
   name: "parameter-head",
   data() {
@@ -51,18 +52,29 @@ export default {
         return false
       }
     },
+    ...mapGetters("exercises", ["count_user_answers"]),
   },
   methods: {
+    // найти неправильные ответы (id) и закрасить их
     count_right_answer(id) {
+      let count_right_answer = 0
       let character_ids = this.parameter_material_character
         .filter((t) => t.parameter_id == id)
         .map((f) => f.id)
-      let desc = this.parameter_material_description.filter((t) =>
-        character_ids.includes(t.parameter_id)
-      )
-      let check_desc = desc.filter((t) => t.check == true).map((f) => f.id)
-      let count_answer = this.right_answer.filter((f) => check_desc.includes(f.id))
-      return count_answer.length
+      // let desc = this.parameter_material_description.filter((t) =>
+      //   character_ids.includes(t.parameter_id)
+      // )
+
+      character_ids.forEach((element) => {
+        let right_answer_id = this.right_answer
+          .filter((t) => t.parameter_id == element)
+          .map((e) => e.id)
+        let value = this.user_answers.find((t) => t == right_answer_id)
+        if (value != undefined) {
+          count_right_answer++
+        }
+      })
+      return count_right_answer
     },
     count_parameters(id) {
       let character = this.parameter_material_character.filter((t) => t.parameter_id == id)
@@ -74,14 +86,6 @@ export default {
     set_active_class() {
       this.parameter_material_head[this.active_tab].active_class = "primary--text"
     },
-    get_count_user_answer() {
-      //Сделать два геттера
-      let character_ids = this.parameter_character_by_head_id.map((t) => t.id)
-      let count_user_answer = this.parameter_material_description
-        .filter((t) => character_ids.includes(t.parameter_id))
-        .filter((o) => o.check == true).length
-      return count_user_answer
-    },
     set_parameter_head_id(id) {
       if (id == null) {
         this.active_tab = 0
@@ -92,13 +96,11 @@ export default {
       this.active_tab_before = this.active_tab
       this.set_active_tab(id)
       this.parameter_material_head[this.active_tab].active_class = "primary--text"
-
-      let count_user_answer = this.get_count_user_answer()
       let count_character = this.parameter_character_by_head_id.length
-      if (count_user_answer != count_character && this.active_tab != this.active_tab_before) {
+      if (this.count_user_answers != count_character && this.active_tab != this.active_tab_before) {
         this.parameter_material_head[this.active_tab_before].active_class = "secondary--text"
       }
-      if (count_user_answer == count_character) {
+      if (this.count_user_answers == count_character) {
         //todo
         this.yet_full = true
       }
@@ -130,24 +132,12 @@ export default {
         }
       }
     },
-    goto_emtpy_field() {},
     next_parameter_head() {
-      let count_user_answer = this.get_count_user_answer()
       let count_character = this.parameter_character_by_head_id.length
-      // console.log(this.active_tab_before)
-      // console.log(this.active_tab)
-      // if (count_user_answer == count_character) {
-      //   this.yet_full = true
-      // } else {
-      //   this.yet_full = false
-      // }
-      // console
-      if (count_user_answer != count_character) {
+      if (this.count_user_answers != count_character) {
         this.yet_full = false
       }
-      if (this.yet_full == false && count_user_answer == count_character) {
-        //let test = this.get_empty_fields()
-
+      if (this.yet_full == false && this.count_user_answers == count_character) {
         this.parameter_material_head[this.active_tab].active_class = "primary--text"
         this.start_index = this.active_tab
         let promise = new Promise((res) => {
@@ -162,12 +152,10 @@ export default {
       }
       let test = this.get_empty_fields()
       let lastIndex = test[test.length - 1]
-      //console.log(this.parameter_material_head.indexOf(lastIndex))
-      //console.log(this.parameter_material_head.indexOf(lastIndex))
       if (
         // this.parameter_material_head.length - 1 == this.active_tab && //todo
         this.parameter_material_head.indexOf(lastIndex) < this.active_tab && //todo взять длину массива которые незаполненеы
-        count_user_answer == count_character
+        this.count_user_answers == count_character
       ) {
         //this.get_empty_character()
         this.start_index = 0

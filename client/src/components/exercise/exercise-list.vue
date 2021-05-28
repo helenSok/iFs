@@ -57,7 +57,9 @@ export default {
       widgets: false,
     }
   },
-  created() {},
+  created() {
+
+  },
   components: {},
   watch: {},
   mounted() {

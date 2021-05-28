@@ -5,20 +5,21 @@
     <v-spacer />
     <template v-if="btn_finish">
       <v-toolbar-title class="pr-4"
-        >Правильных ответов {{ count_selected_checkbox }} из
+        >Правильных ответов {{ count_right_answer }} из
         {{ right_answer.length }}</v-toolbar-title
       >
       <v-btn @click="refresh()" outlined class="mr-2">Продолжить</v-btn>
-      <v-btn @click="gotoMain()" outlined>Завершить</v-btn>
+      <v-btn @click="gotoMain()" outlined>Главная</v-btn>
     </template>
     <template>
-      <v-btn @click="set_updateFinish" v-if="btnEnd1" outlined>Завершить</v-btn>
+      <v-btn @click="set_updateFinish" outlined>Завершить</v-btn> 
+      <!-- v-if="btnEnd1"  -->
     </template>
   </v-app-bar>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex"
+import { mapState, mapActions, mapMutations } from "vuex"
 import AppNavIcon from "./app-nav-icon.vue"
 import router from "../router"
 export default {
@@ -27,6 +28,7 @@ export default {
     drawer: null,
     btnEnd1: false,
     btn_finish: false,
+    count_right_answer: 0
   }),
   components: {
     AppNavIcon,
@@ -46,10 +48,14 @@ export default {
       //todo отслеживание изменения маршрута
       //todo при задержке в 0,3 сек возможно нажать на checkbox тогда не появиться кнопка завершить
       this.btn_finish = false
+      this.set_disabled_checkbox(false)
     },
   },
-  mounted() {},
+  mounted() {
+    
+  },
   methods: {
+    ...mapMutations("exercises", ["set_disabled_checkbox"]),
     ...mapActions("app", ["change_drawer_icon"]),
     ...mapActions("exercises", ["udateFinish"]),
     ...mapActions("parameters", ["updateCountAnswer", "resetChecked", "resetTabIndex"]),
@@ -62,13 +68,48 @@ export default {
     refresh() {
       this.getMaterials()
       this.btn_finish = false
+      this.set_disabled_checkbox(false)
       // this.$store.commit("parameters/SET_SELECTED_PARAMETER_FACE_ID", 0) //todo интересная запись
+    },
+    set_right_answer() { // Получаем количество правильных ответов и закрашиваем checkbox
+      const count_right_answer = this.parameter_material_description
+      .map((t) => t)
+      .filter((f) => this.right_answer.map((e) => e.id).includes(f.id))
+      let count = count_right_answer.filter(t => t.check == true).length
+      this.set_false_answer()
+      this.count_right_answer = count
+    },
+    set_false_answer() {
+      let user_answer = this.parameter_material_description.filter(e => e.check == true)
+      user_answer.forEach(element => {
+        if (this.right_answer.find(t => t.id == element.id)) {
+          element.color = "green"
+        }
+        else {
+          element.color = "red"
+        }
+      });
+      this.right_answer.forEach(element => {
+        this.parameter_material_description.find(t => t.id == element.id).check = true
+        this.parameter_material_description.find(t => t.id == element.id).color = "green"
+
+      });
+      // this.parameter_material_description.forEach(element => {
+      //   if (this.right_answer.find(t => t.id != element.id) && element.check === true) {
+      //     console.log("Неверный")
+      //   }
+      //   else {
+      //     console.log("Верный")
+      //   }
+      // });
     },
     set_updateFinish() {
       this.udateFinish(true)
       this.updateCountAnswer(-1)
       this.btnEnd1 = false
       this.btn_finish = true
+      this.set_disabled_checkbox(true)
+      this.set_right_answer()
     },
   },
   computed: {
@@ -80,7 +121,7 @@ export default {
       "selected_exercise_type",
       "count_selected_checkbox",
     ]),
-    ...mapState("materials", ["right_answer"]),
+    ...mapState("materials", ["right_answer", "parameter_material_description"]),
     material_type() {
       //todo дублирование переменной
       let settings = {}

@@ -3,7 +3,7 @@ const router = express.Router()
 const controller = require("../controllers/exercises")
 const db = require("../models")
 
-router.get("/exercises/settings/users/:id", controller.getAll) //Пользовательские настройки упражнения
+router.get("/exercises/settings/users", controller.getAll) //Пользовательские настройки упражнения
 // router.get("/exercises/settings/users/:id", (req, res) => {
 //   db.sequelize
 //     .query("select * from exercises", {

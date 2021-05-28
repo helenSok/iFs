@@ -16,6 +16,8 @@ export default {
     maxAnswer: 0,
     rightAnswer: 0,
     finish: false,
+    disabled_checkbox: false,
+    user_answers: [] // id параметра материала
   },
   actions,
   mutations,

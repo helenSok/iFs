@@ -32,11 +32,19 @@ const routes = [
     path: "/main/exercises",
     name: "exercise-page",
     component: ExercisePage,
+    props: true,
   },
   {
-    path: "/exercise/1",
+    path: "/exercise/:id",
     name: "exercise-first",
     component: ExerciseFirst,
+    props: true,
+  },
+  {
+    path: "/exercise/:id",
+    name: "exercise-second",
+    component: ExerciseFirst,
+    props: true,
   },
 ]
 

@@ -1023,3 +1023,32 @@ insert into material_parameters (material_id, parameter_id) VALUES (6, 115);
 insert into material_parameters (material_id, parameter_id) VALUES (6, 117);
 insert into material_parameters (material_id, parameter_id) VALUES (6, 120);
 insert into material_parameters (material_id, parameter_id) VALUES (6, 123);
+
+DELIMITER $$
+CREATE PROCEDURE `get_exercises`(IN `user_id` INT, IN `exercise_type_id` INT) 
+NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER 
+BEGIN
+select exercises.id, exercises.title, exercises.name, exercises.purpose, exercises.description, exercises.uri 
+from exercises INNER JOIN exercise_settings on exercises.id = exercise_settings.exercise_id 
+where exercise_settings.exercise_type_id = exercise_type_id 
+and exercise_settings.actual = 1 
+and exercise_settings.user_id = user_id;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE VIEW v_exercise_types 
+AS
+SELECT * FROM exercise_types;
+$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `get_parameters_by_ids`(IN `ids` VARCHAR(100) CHARSET utf8) NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER
+BEGIN 
+SET @respons = concat('SELECT * FROM parameters WHERE id IN (', ids, ')'); 
+PREPARE stmt FROM @respons; 
+EXECUTE stmt; 
+DEALLOCATE PREPARE stmt; 
+END $$
+DELIMITER ; 
